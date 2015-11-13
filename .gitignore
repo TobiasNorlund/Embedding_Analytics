@@ -1,0 +1,7 @@
+# custom
+*.pyproj
+*.v12.suo
+*.pyc
+*.pkl
+.idea/
+*~
