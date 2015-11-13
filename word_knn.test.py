@@ -19,9 +19,14 @@ k = 10
 
 ## -----------------------------------------------------
 
-(word_vectors, word_map) = word_space.get_all_word_vectors()
-nbrs = NearestNeighbors(n_neighbors=k, algorithm='brute', metric='cosine').fit(word_vectors)
+sys.stdout.write("Loads a  word vectors...")
 
+(word_vectors, word_map) = word_space.get_all_word_vectors()
+
+sys.stdout.write("\rBuilds model...")
+
+nbrs = NearestNeighbors(n_neighbors=k, algorithm='brute', metric='cosine').fit(word_vectors)
+sys.stdout.write("\r")
 print "Enter the word to lookup:"
 
 while True:
@@ -33,6 +38,6 @@ while True:
         continue
 
     # Fetch neighbours
-    distances, indices = nbrs.kneighbors(test_vec)
+    distances, indices = nbrs.kneighbors(test_vec.reshape(1, -1))
     for i in range(10):
         print word_map.items()[indices[0][i]][0]
