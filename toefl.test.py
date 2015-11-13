@@ -12,7 +12,7 @@ from sklearn.neighbors import NearestNeighbors
 ## -- CONFIGURATION ------------------------------------
 
 # Which words to load
-word_space = RiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-3000000-2000-2")
+word_space = W2vDictionary("/home/tobiasnorlund/Embeddings/GoogleNews-vectors-negative300.bin")#RiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-3000000-2000-2")
 
 # Where the toefl file is located
 toefl_path = "/home/tobiasnorlund/Datasets/TOEFL/toefl.txt"

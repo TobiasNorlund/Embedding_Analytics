@@ -19,7 +19,7 @@ k = 10
 
 ## -----------------------------------------------------
 
-sys.stdout.write("Loads a  word vectors...")
+sys.stdout.write("Loads all word vectors...")
 
 (word_vectors, word_map) = word_space.get_all_word_vectors()
 
