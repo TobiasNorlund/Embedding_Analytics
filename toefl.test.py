@@ -1,5 +1,6 @@
 import sys; sys.path.insert(0, "../Attention_RI")
 import numpy as np
+import sklearn.metrics.pairwise as metrics
 from dictionary import *
 from sklearn.neighbors import NearestNeighbors
 
@@ -12,7 +13,7 @@ from sklearn.neighbors import NearestNeighbors
 ## -- CONFIGURATION ------------------------------------
 
 # Which words to load
-word_space = W2vDictionary("/home/tobiasnorlund/Embeddings/GoogleNews-vectors-negative300.bin")#RiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-3000000-2000-2")
+word_space = LogTransformRiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-100000-2000-2", 10, False) #W2vDictionary("/home/tobiasnorlund/Embeddings/GoogleNews-vectors-negative300.bin")#
 
 # Where the toefl file is located
 toefl_path = "/home/tobiasnorlund/Datasets/TOEFL/toefl.txt"
@@ -39,6 +40,7 @@ for line in toefl:
     test_vec = vecs[0,:]
 
     diist = np.dot(vecs[0,:], vecs[1,:]) / (np.linalg.norm(vecs[0,:])*np.linalg.norm(vecs[1,:]))
+    dists = metrics.cosine_similarity(np.atleast_2d(vecs[0,:]), vecs[1:,:])
 
     alts = vecs[1:, :]
     nbrs = NearestNeighbors(n_neighbors=1, algorithm='brute', metric='cosine').fit(alts)
@@ -47,8 +49,8 @@ for line in toefl:
     tot += 1
     if ind == 0:
         correct += 1
-        print line + " CORRECT (dist=" + str(diist) + ")"
+        print "CORRECT\t" + line + " (" + str(dists) + ")"
     else:
-        print line + " FAIL (" + line_split[ind+1] + " dist=" + str(diist) + ")"
+        print "FAIL\t" + line + " (" + str(dists) + ")"
 
 print "\nFINISHED: " + str(float(correct) * 100 / tot) + "% correct"
