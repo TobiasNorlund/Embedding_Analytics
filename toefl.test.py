@@ -1,4 +1,4 @@
-import sys; sys.path.insert(0, "../Attention_RI")
+import sys; sys.path.insert(0, "../Attention_RI/embedding")
 import numpy as np
 import sklearn.metrics.pairwise as metrics
 from dictionary import *
@@ -13,7 +13,10 @@ from sklearn.neighbors import NearestNeighbors
 ## -- CONFIGURATION ------------------------------------
 
 # Which words to load
-word_space = LogTransformRiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-100000-2000-2", 10, False) #W2vDictionary("/home/tobiasnorlund/Embeddings/GoogleNews-vectors-negative300.bin")#
+word_space = W2vDictionary("/home/tobiasnorlund/Embeddings/wiki2010-300.skipgram.bin")
+#PyDsmDictionary("/home/tobiasnorlund/Embeddings/wiki-stanford.pydsm.pkl")
+# #GloVeDictionary("/home/tobiasnorlund/Code/GloVe-1.2/vectors.txt")
+# #PmiRiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-2000000-2000-2", 10, use_true_counts=False) #
 
 # Where the toefl file is located
 toefl_path = "/home/tobiasnorlund/Datasets/TOEFL/toefl.txt"
@@ -23,6 +26,7 @@ toefl_path = "/home/tobiasnorlund/Datasets/TOEFL/toefl.txt"
 toefl = open(toefl_path)
 correct = 0
 tot = 0
+skip_line = False
 
 for line in toefl:
     line = line[0:-1] # remove \n
@@ -35,7 +39,13 @@ for line in toefl:
             vecs[i, :] = vec
         else:
             print "Word not in dictionary: " + line_split[i]
-
+            if i == 0:
+                tot += 1
+                skip_line = True
+                break
+    if skip_line:
+        skip_line = False
+        continue
 
     test_vec = vecs[0,:]
 

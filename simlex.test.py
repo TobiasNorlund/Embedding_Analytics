@@ -1,4 +1,4 @@
-import sys; sys.path.insert(0, "../Attention_RI")
+import sys; sys.path.insert(0, "../Attention_RI/embedding/")
 import numpy as np
 import scipy.stats
 from dictionary import *
@@ -13,7 +13,9 @@ from dictionary import *
 ## -- CONFIGURATION ------------------------------------
 
 # Which words to load
-word_space = RiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-100000-2000-2")#, 10, False) #W2vDictionary("/home/tobiasnorlund/Embeddings/GoogleNews-vectors-negative300.bin")#
+word_space = W2vDictionary("/home/tobiasnorlund/Embeddings/wiki2010-300.skipgram.bin")
+#GloVeDictionary("/home/tobiasnorlund/Embeddings/GloVe-wiki2010.txt")
+# PyDsmDictionary("/home/tobiasnorlund/Embeddings/wiki-stanford.pydsm.pkl")#PmiRiDictionary("/media/tobiasnorlund/ac861917-9ad7-4905-93e9-ee6ab16360ad/bigdata/Dump/Wikipedia-2000000-2000-2", epsilon=10, use_true_counts=False) #
 
 # Where the toefl file is located
 simlex_path = "/home/tobiasnorlund/Datasets/SimLex/simlex.txt"
